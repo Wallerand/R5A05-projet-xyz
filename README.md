@@ -1,66 +1,89 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# XYZ
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Démarrage rapide
 
-## About Laravel
+Pour démarrer le projet, lancer les commandes suivantes :
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```bash
+# Récupération des sources
+$ git clone https://github.com/wallerand/R5A05-projet-xyz.git
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Lancement de la stack
+$ docker-compose -p "projet-xyz" up -d
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# ...
+# ... Attendre le lancement des services
+# ...
 
-## Learning Laravel
+# Tâches d'installation (composer.json:49)
+$ docker exec -it xyz-app composer run-script install-app
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Se rendre ensuite sur :
+- [http://localhost:8045/project/1/overview](http://localhost:8045/project/1/overview) pour consulter le descriptif du projet (captures d'écran)
+- [http://localhost:8045/board/1](http://localhost:8045/board/1) pour accéder au backlog du projet
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### URL d'accès
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Nom             | URL                                      | Description |
+|-----------------|------------------------------------------|-------------|
+| **Application** | [localhost](http://localhost:80/)        | —           |
+| **PMA**         | [localhost:8080](http://localhost:8080/) | Interface de gestion de la base de données   |
+| **Kanboard**    | [localhost:8045](http://localhost:8045/project/1) | Backlog du projet   |
+| **Maildev**     | [localhost:8025](http://localhost:8025/) | Serveur SMTP et interface de test des emails |
 
-## Laravel Sponsors
+## Tâches (backlog)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Les tâches de développement sont organisées sous la forme d'un backlog accessible à l'adresse [http://localhost:8045/board/1](http://localhost:8045/board/1).
 
-### Premium Partners
+Pour se connecter, utiliser les identifiants suivants : 
+- **Identifiant**: `dev`
+- **Mot de passe**: `password`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Pour les étudiants utilisant des postes partagés
 
-## Contributing
+Pour sauvegarder la progression du développement du projet, il est nécessaire de réaliser une sauvegarde (dump) de la base de données `kanboard` à chaque fin de session :
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Se rendre sur la page d'exportation (PMA) 
+    http://localhost:8080/index.php?route=/database/export&db=kanboard
+2. Cliquer sur Exporter et sauvegarder le fichier
 
-## Code of Conduct
+Lors de la prochaine session, il sera nécessaire de réimporter le dump précédent :
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. Vider la base de données `kanboard`
+2. Se rendre sur la page d'importation (PMA)
+    http://localhost:8080/index.php?route=/database/import&db=kanboard
+3. Importer le fichier
 
-## Security Vulnerabilities
+## Cheatsheet
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Commandes (CLI)
 
-## License
+Pour lancer des commandes dans le conteneur de l'application, utiliser le préfix `docker exec -it xyz-app {command}`.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Exemples :
+```bash
+$ docker exec -it xyz-app composer --version
+$ docker exec -it xyz-app php artisan about
+$ docker exec -it xyz-app php artisan make:model Example -msfc --test
+```
+
+### Archivage
+
+Pour générer une archive du projet, utiliser la commande suivante :
+```bash
+$ git archive -o xyz-latest.zip HEAD
+```
+
+## Données de test
+
+Des comptes de démonstration sont générés lors du seeding :
+
+| Utilisateur | Adresse e-mail    |  Mot de passe |
+|-------------|-------------------|---------------|
+| user0001    | user0001@example.com | `password` |
+| user0002    | user0002@example.com | `password` |
+| ...         | ...                  | ...        |
+| user0015    | user0015@example.com | `password` |
+
+Lors du seeding, des exemples de contributions Soundcloud sont utilisés. Ces exemples sont récupérés à partir du fichier [TrackSamples.php](database/Samples/TrackSamples.php).

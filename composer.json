@@ -1,9 +1,8 @@
 {
-    "name": "laravel/laravel",
+    "name": "iut-info-but3/projet-xyz",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
-    "license": "MIT",
+    "description": "XYZ est une communauté musicale accessible sur invitation.",
+    "license": "CC BY-NC-SA 4.0",
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.9",
@@ -44,6 +43,13 @@
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
+        ],
+        "install-app": [
+            "composer install",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php artisan key:generate --ansi",
+            "@php artisan storage:link",
+            "@php artisan migrate:fresh --seed --step"
         ]
     },
     "extra": {
