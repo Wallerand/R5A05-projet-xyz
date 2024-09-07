@@ -5,18 +5,18 @@
 Pour démarrer le projet, lancer les commandes suivantes :
 
 ```bash
-# Récupération des sources
-$ git clone https://github.com/wallerand/R5A05-projet-xyz.git
+# Récupérer les sources du projet
+$ git clone https://github.com/wallerand/R5A05-projet-xyz.git projet-xyz
 
-# Lancement de la stack
+# Se rendre dans le dossier du projet
+$ cd projet-xyz
+
+# Lancer la stack du projet
 $ docker-compose -p "projet-xyz" up -d
 
 # ...
 # ... Attendre le lancement des services
 # ...
-
-# Tâches d'installation (composer.json:49)
-$ docker exec -it xyz-app composer run-script install-app
 ```
 
 Se rendre ensuite sur :
@@ -40,15 +40,15 @@ Pour se connecter, utiliser les identifiants suivants :
 - **Identifiant**: `dev`
 - **Mot de passe**: `password`
 
-### Pour les étudiants utilisant des postes partagés
+### Pour les étudiants qui utilisent des postes partagés
 
-Pour sauvegarder la progression du développement du projet, il est nécessaire de réaliser une sauvegarde (dump) de la base de données `kanboard` à chaque fin de session :
+Pour sauvegarder la progression du backlog, il est nécessaire de réaliser une sauvegarde (dump) de la base de données `kanboard` à chaque fin de séance :
 
 1. Se rendre sur la page d'exportation (PMA) 
     http://localhost:8080/index.php?route=/database/export&db=kanboard
 2. Cliquer sur Exporter et sauvegarder le fichier
 
-Lors de la prochaine session, il sera nécessaire de réimporter le dump précédent :
+Lors de la prochaine séance, il sera nécessaire de réimporter le dump précédent :
 
 1. Vider la base de données `kanboard`
 2. Se rendre sur la page d'importation (PMA)

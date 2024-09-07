@@ -294,7 +294,7 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `name`, `is_active`, `token`, `last_modified`, `is_public`, `is_private`, `description`, `identifier`, `start_date`, `end_date`, `owner_id`, `priority_default`, `priority_start`, `priority_end`, `email`, `predefined_email_subjects`, `per_swimlane_task_limits`, `task_limit`, `enable_global_tags`) VALUES
-(1, 'Projet XYZ', 1, '', 1725129277, 0, 0, '# À propos\r\n\r\nXYZ est une communauté musicale accessible sur invitation.\r\n\r\n- Le contenu est regroupé par semaine\r\n- Chaque utilisateur peut publier jusqu\'à 2 titres chaque semaine\r\n- La communauté détermine le classement de la semaine\r\n- Les utilisateurs peuvent écouter les contributions sans quitter l\'application (lecteurs tiers Youtube et Soundcloud)\r\n\r\n#### Caractéristiques techniques\r\n- Backend : PHP, framework Laravel \r\n- Frontend : HTML/CSS, SSR Blade', 'XYZ', '', '', 1, 0, 0, 3, '', NULL, 0, 0, 1);
+(1, 'Projet XYZ', 1, '', 1725190286, 0, 0, '# À propos\r\n\r\nXYZ est une communauté musicale accessible sur invitation.\r\n\r\n- Le contenu est regroupé par semaine\r\n- Chaque utilisateur peut publier jusqu\'à 2 titres chaque semaine\r\n- La communauté détermine le classement de la semaine\r\n- Les utilisateurs peuvent écouter les contributions sans quitter l\'application (lecteurs tiers Youtube et Soundcloud)\r\n\r\n#### Caractéristiques techniques\r\n- Backend : PHP, framework Laravel \r\n- Frontend : HTML/CSS, SSR Blade', 'XYZ', '', '', 1, 0, 0, 3, '', NULL, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -333,7 +333,9 @@ CREATE TABLE `project_daily_column_stats` (
 
 INSERT INTO `project_daily_column_stats` (`id`, `day`, `project_id`, `column_id`, `total`, `score`) VALUES
 (77, '2024-08-31', 1, 1, 22, 0),
-(78, '2024-08-31', 1, 3, 2, 0);
+(78, '2024-08-31', 1, 3, 2, 0),
+(85, '2024-09-01', 1, 1, 22, 0),
+(86, '2024-09-01', 1, 3, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -354,7 +356,8 @@ CREATE TABLE `project_daily_stats` (
 --
 
 INSERT INTO `project_daily_stats` (`id`, `day`, `project_id`, `avg_lead_time`, `avg_cycle_time`) VALUES
-(40, '2024-08-31', 1, 5098, 0);
+(40, '2024-08-31', 1, 5098, 0),
+(44, '2024-09-01', 1, 66808, 0);
 
 -- --------------------------------------------------------
 
@@ -700,7 +703,7 @@ CREATE TABLE `tasks` (
 --
 
 INSERT INTO `tasks` (`id`, `title`, `description`, `date_creation`, `date_completed`, `date_due`, `color_id`, `project_id`, `column_id`, `owner_id`, `position`, `score`, `is_active`, `category_id`, `creator_id`, `date_modification`, `reference`, `date_started`, `time_spent`, `time_estimated`, `swimlane_id`, `date_moved`, `recurrence_status`, `recurrence_trigger`, `recurrence_factor`, `recurrence_timeframe`, `recurrence_basedate`, `recurrence_parent`, `recurrence_child`, `priority`, `external_provider`, `external_uri`) VALUES
-(1, 'Installation de base', '# Description\r\n\r\nCette tâche vise à configurer l\'environnement de développement avant de débuter le travail.\r\n\r\n# Actions\r\n\r\n- Configurer Git\r\n\r\n```bash\r\n// Setup Git credentials\r\ngit config user.name \"Prénom Nom\"\r\ngit config user.email \"prenom.nom@etu.unilim.fr\"\r\n\r\n// Setup remote\r\ngit remote remove origin\r\ngit remote add origin <url>\r\n```\r\n\r\n- Ajouter les extensions VSC suivantes :\r\n\r\n  - [PHP Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client)\r\n  - [Laravel Blade Syntax](https://marketplace.visualstudio.com/items?itemName=onecentlin.laravel-blade)', 1725122177, NULL, 0, 'grey', 1, 3, 2, 1, 0, 1, 1, 1, 1725125974, '', 0, 0, 0, 1, 1725122190, 0, 0, 0, 0, 0, NULL, NULL, 0, NULL, NULL),
+(1, 'Installation de base', '# Description\r\n\r\nCette tâche vise à configurer l\'environnement de développement avant de débuter le travail.\r\n\r\n# Actions\r\n\r\n- Ajouter les extensions VSC suivantes :\r\n\r\n  - [PHP Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client)\r\n  - [Laravel Blade Syntax](https://marketplace.visualstudio.com/items?itemName=onecentlin.laravel-blade)\r\n  - (optionnel, Windows uniquement) [WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl)\r\n\r\n- Configurer Git\r\n\r\n```bash\r\n// Configurer les identifiants\r\ngit config user.name \"Prénom Nom\"\r\ngit config user.email \"prenom.nom@etu.unilim.fr\"\r\n\r\n// Configurer le dépôt distant (https://git.unilim.fr/{identifiant}/projet-xyz)\r\ngit remote remove origin\r\ngit remote add origin <url>\r\n\r\n// Changer de branche\r\ngit checkout -b develop\r\n```\r\n\r\n- Installer le projet\r\n\r\n```bash\r\n// Installer les dépendances\r\n$ docker exec -it xyz-app composer install\r\n\r\n// Créer le fichier .env à partir du fichier d\'exemple\r\n$ docker exec -it xyz-app php -r \"file_exists(\'.env\') || copy(\'.env.example\', \'.env\');\"\r\n\r\n// Générer la clé d\'application\r\n$ docker exec -it xyz-app php artisan key:generate --ansi\r\n\r\n// Installer la base de données\r\n$ docker exec -it xyz-app php artisan migrate:fresh --seed --step\r\n```', 1725122177, NULL, 0, 'grey', 1, 3, 2, 1, 0, 1, 1, 1, 1725190286, '', 0, 0, 0, 1, 1725122190, 0, 0, 0, 0, 0, NULL, NULL, 0, NULL, NULL),
 (2, 'Modélisation des utilisateurs', '# Description\r\n\r\nCette tâche vise à mettre à jour la configuration de base du modèle User pour correspondre aux spécifications du projet.\r\n\r\n# Règles de gestion\r\n\r\n- Doit inclure une adresse e-mail et un mot de passe\r\n- Peut inclure un avatar personnalisé\r\n- Le nom d’utilisateur est déterminé par l’application et suit le format suivant :\r\n    \r\n    `user{id}` où `id` correspond au numéro d’utilisateur d’une longueur minimale de 4 caractères\r\n    \r\n    Exemples:\r\n    \r\n    - Utilisateur n°1 : user0001\r\n    - Utilisateur n°532 : user0532\r\n\r\n# Ressources\r\n\r\n- https://laravel.com/docs/11.x/migrations\r\n- https://laravel.com/docs/11.x/eloquent\r\n- https://laravel.com/docs/11.x/eloquent-mutators#defining-an-accessor\r\n- https://www.php.net/manual/fr/function.str-pad.php', 1725123062, NULL, 0, 'blue', 1, 1, 2, 1, 0, 1, 2, 1, 1725123236, '', 0, 0, 0, 1, 1725123062, 0, 0, 0, 0, 0, NULL, NULL, 0, NULL, NULL),
 (3, 'Formulaire de connexion', '# Description\r\n\r\nCette tâche vise à permettre à l’utilisateur de se connecter au moyen de son adresse e-mail et de son mot de passe.\r\n\r\n# Règles de gestion\r\n\r\n- Le formulaire de connexion doit être accessible à l’URL `/login`\r\n- La déconnexion doit passer par une requête POST à l’URL `/logout`\r\n\r\n# Ressources\r\n\r\n- https://laravel.com/docs/11.x/authentication', 1725123122, NULL, 0, 'blue', 1, 1, 2, 2, 0, 1, 2, 1, 1725123228, '', 0, 0, 0, 1, 1725123122, 0, 0, 0, 0, 0, NULL, NULL, 0, NULL, NULL),
 (4, 'Modélisation des codes d’inscription', '# Description\r\n\r\nCette tâche vise à mettre en place la modélisation nécessaire pour prendre en charge l’inscription par code d’invitation.\r\n\r\n# Règles de gestion\r\n\r\n- Chaque compte dispose de 5 codes dʼinvitation générés dès lʼinscription\r\n\r\n# Ressources\r\n\r\n- https://laravel.com/docs/11.x/eloquent-relationships#one-to-many', 1725123220, NULL, 0, 'orange', 1, 1, 2, 3, 0, 1, 3, 1, 1725127595, '', 0, 0, 0, 1, 1725123220, 0, 0, 0, 0, 0, NULL, NULL, 0, NULL, NULL),
@@ -1361,13 +1364,13 @@ ALTER TABLE `project_activities`
 -- AUTO_INCREMENT pour la table `project_daily_column_stats`
 --
 ALTER TABLE `project_daily_column_stats`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT pour la table `project_daily_stats`
 --
 ALTER TABLE `project_daily_stats`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT pour la table `project_has_categories`
