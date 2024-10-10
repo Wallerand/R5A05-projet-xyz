@@ -1,0 +1,87 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: './.docker'
+      dockerfile: Dockerfile
+    image: projet-xyz/app
+    container_name: xyz-app
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '80:80'
+      - '5173:5173'
+    environment:
+      XDEBUG_MODE: 'coverage'
+      IGNITION_LOCAL_SITES_PATH: '${PWD}'
+    volumes:
+      - '.:/app'
+    networks:
+      - xyz
+    depends_on:
+      - mysql
+      - maildev
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    container_name: xyz-db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: 'xyz'
+      MYSQL_USER: 'xyz'
+      MYSQL_PASSWORD: 'xyz'
+      MYSQL_ROOT_PASSWORD: 'root'
+    volumes:
+      - 'xyz-database:/var/lib/mysql'
+      - './.docker/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+      - './.docker/create-kanboard-database.sh:/docker-entrypoint-initdb.d/10-create-kanboard-database.sh'
+      - './.docker/import-kanboard-data.sql:/docker-entrypoint-initdb.d/12-import-kanboard-data.sql'
+    networks:
+      - xyz
+  maildev:
+    image: 'maildev/maildev:latest'
+    container_name: xyz-mail
+    ports:
+      - '1025:1025'
+      - '8025:1080'
+    networks:
+      - xyz
+  pma:
+    image: 'phpmyadmin:latest'
+    container_name: xyz-pma
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: xyz
+      PMA_PASSWORD: xyz
+    networks:
+      - xyz
+    depends_on:
+      - mysql
+  kanboard:
+    image: kanboard/kanboard:v1.2.39
+    container_name: xyz-kanboard
+    ports:
+      - "8045:80"
+    environment:
+      DATABASE_URL: mysql://xyz:xyz@mysql/kanboard
+    depends_on:
+      - mysql
+    networks:
+      - xyz
+    volumes:
+      - ./.docker/kanboard:/var/www/app/data
+      - xyz-kanboard-plugins:/var/www/app/plugins
+
+networks:
+  xyz:
+    driver: bridge
+
+volumes:
+  xyz-database:
+    driver: local
+  xyz-kanboard-plugins:
+    driver: local
